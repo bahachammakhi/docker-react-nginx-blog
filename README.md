@@ -73,7 +73,7 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-![blog-pictures](Dblog-pictures/dockerfile.png)
+![blog-pictures](blog-pictures/dockerfile.png)
 
 ### Whats happening here ?
 
