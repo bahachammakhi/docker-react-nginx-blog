@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        form :focus:required:invalid {
+            border-color: #a94442;
+        }
+    </style>
+    <head>
+        <meta charset="utf-8" />
+        <title>CovefefeRun</title>
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"
+        />
+        <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-firestore.js"></script>
+    </head>
+    <body class="container">
+        <header>
+            <h1>CovefefeRun</h1>
+        </header>
+        <section>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <form data-coffee-order="form">
+                        <div class="form-group">
+                            <label for="coffeeOrder">Coffee Order</label>
+                            <input
+                                class="form-control"
+                                name="coffee"
+                                id="coffeeOrder"
+                                autofocus
+                                required="true"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label for="emailInput">Email</label>
+                            <input
+                                class="form-control"
+                                type="email"
+                                name="emailAddress"
+                                id="emailInput"
+                                value=""
+                                placeholder="jareddyreson@csu.fullerton.edu"
+                                required="true"
+                            />
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="size" value="Short" />
+                                Short
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="size"
+                                    value="Tall"
+                                    checked
+                                />
+                                Tall
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="size"
+                                    value="Grande"
+                                />
+                                Grande
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="syrupSelection">Syrup</label>
+                            <select
+                                id="syrupSelection"
+                                class="form-control"
+                                name="syrup"
+                            >
+                                <option value="">None</option>
+                                <option value="caramel">Caramel</option>
+                                <option value="mocha">Mocha</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="strengthLevel"
+                                >Caffeine Rating (WE DON'T DO THIS!)</label
+                            >
+                            <input
+                                name="strength"
+                                id="strengthLevel"
+                                type="range"
+                                value="30"
+                            />
+                        </div>
+
+                        <div class="panel-body">
+                            <h4>Payment Section</h4>
+                            <div class="form-group">
+                                <label for="card">
+                                    <span>Card type:</span>
+                                </label>
+                                <select id="card" name="usercard">
+                                    <option value="visa">Visa</option>
+                                    <option value="mc">Mastercard</option>
+                                    <option value="amex">
+                                        American Express
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="number">
+                                    <span>Card number:</span>
+                                    <strong
+                                        ><abbr title="required">*</abbr></strong
+                                    >
+                                </label>
+                                <input
+                                    type="tel"
+                                    id="number"
+                                    name="cardnumber"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label for="expiration">
+                                    <span>Expiration date:</span>
+                                    <strong
+                                        ><abbr title="required">*</abbr></strong
+                                    >
+                                </label>
+                                <input
+                                    type="text"
+                                    name="expiration"
+                                    required="true"
+                                    placeholder="MM/YY"
+                                    pattern="^(0[1-9]|1[0-2])\/([0-9]{2})$"
+                                />
+                            </div>
+
+                            <button type="submit" class="btn btn-default">
+                                Submit
+                            </button>
+                            <button type="reset" class="btn btn-default">
+                                Reset
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div data-modal-landing="landing"></div>
+
+                <div class="panel-body">
+                    <h4>Pending Orders:</h4>
+                    <div data-coffee-order="checklist"></div>
+                </div>
+            </div>
+
+        </section>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"
+        ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"
+        />
+        <script src="scripts/firebaseconfig.js" charset="utf-8"></script>
+        <script src="scripts/landing.js" charset="utf-8"></script>
+        <script src="scripts/validation.js" charset="utf-8"></script>
+        <script src="scripts/checklist.js" charset="utf-8"></script>
+        <script src="scripts/formhandler.js" charset="utf-8"></script>
+        <script src="scripts/remotedatastore.js" charset="utf-8"></script>
+        <script src="scripts/datastore.js" charset="utf-8"></script>
+        <script src="scripts/firebasedatastore.js" charset="utf-8"></script>
+        <script src="scripts/truck.js" charset="utf-8"></script>
+        <script src="scripts/payment.js" charset="utf-8"></script>
+        <script src="scripts/main.js" charset="utf-8"></script>
+    </body>
+</html>
