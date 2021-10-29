@@ -11,7 +11,7 @@ class Login extends React.Component {
         this.name = "Login";
     }
     render() {
-        return <h1>My name is {this.name}</h1>;
+        return <h1>My name is {this.name} and I added this here to check the Docker output</h1>;
     }
 }
 export default Login;
