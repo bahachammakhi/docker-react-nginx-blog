@@ -1,18 +1,37 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import Login from "./js/components/Login.js";
-import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Login from "./components/LoginPrompt.js"; // import function exports like this
+import Landing from "./components/Landing.js";
+import LocationSelectionMenu from "./components/LocationSelection.js";
 
-ReactDOM.render(
-    <React.StrictMode>
-        <Login />
-    </React.StrictMode>,
-    document.getElementById("root")
-);
+import "./styles.css";
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// you must define the paths here in main
+// a lot like routes.py in Flask
+// NOTE: current approach does NOT protect against unauthorized redirects
+// beyond the scope of this section at the moment, will lookn into later
+
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <BrowserRouter>
+          <div>
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route exact path="/landing" component={Landing} />
+              <Route
+                exact
+                path="/locations"
+                component={LocationSelectionMenu}
+              />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));

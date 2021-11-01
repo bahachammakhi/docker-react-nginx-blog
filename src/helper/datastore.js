@@ -26,4 +26,5 @@ class DataStore {
     }
 }
 
-module.exports.DataStore = DataStore;
+const _DataStore = DataStore;
+export { _DataStore as DataStore };
