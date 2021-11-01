@@ -6,6 +6,7 @@ import Landing from "./components/Landing.js";
 import LocationSelectionMenu from "./components/LocationSelection.js";
 
 import "./styles.css";
+// This should appear in the repo
 
 // you must define the paths here in main
 // a lot like routes.py in Flask
