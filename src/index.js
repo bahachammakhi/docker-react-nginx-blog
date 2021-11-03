@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Login from "./components/LoginPrompt.js"; // import function exports like this
 import Landing from "./components/Landing.js";
+import Payment from "./components/PaymentSelection.js";
 import LocationSelectionMenu from "./components/LocationSelection.js";
 
 import "./styles.css";
@@ -21,7 +22,7 @@ class App extends React.Component {
         <BrowserRouter>
           <div>
             <Switch>
-              <Route exact path="/" component={Login} />
+              <Route exact path="/" component={Payment} />
               <Route exact path="/landing" component={Landing} />
               <Route
                 exact
