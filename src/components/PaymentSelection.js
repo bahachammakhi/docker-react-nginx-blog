@@ -81,44 +81,6 @@ export default function Payment() {
 
   const onSubmit = (data, e) => {
     e.target.reset();
-    // This will transition us into the next React component
-    // https://stackoverflow.com/questions/60516300/how-to-use-in-reactjs-functional-component-history-push
-    // Thank you StackOverflow, I am forver in debt to you
-
-    const [emailAddress, password] = Object.values(data);
-    if (!validate_email(emailAddress)) {
-      // FIXME
-      // Make this look cooler
-      alert(`Oops, ${emailAddress} is not apart of a valid email domain`);
-      reset({
-        emailAddress: "",
-        passwordProvided: ""
-      });
-    } else {
-      // README: THIS WORKS
-      (async () => {
-        const value = await datastore.get(
-          emailAddress,
-          "users",
-          "emailAddress"
-        );
-        if (value.password !== password) {
-          alert(`Cannot authenticate ${emailAddress}! Try again!`);
-          reset({
-            emailAddress: "",
-            passwordProvided: ""
-          });
-        } else {
-          history.push({
-            pathname: "/landing",
-            state: {
-              response: "hey mom, no hands!"
-            }
-          });
-        }
-        console.log(value);
-      })();
-    }
   };
 
   return (
