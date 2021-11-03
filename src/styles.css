@@ -30,7 +30,6 @@ p {
 
 p::before {
   display: inline;
-  content: "⚠ ";
 }
 
 input {
@@ -129,4 +128,14 @@ button {
   text-transform: uppercase;
   padding: 10px 20px;
   border-radius: 4px;
+}
+
+#divElement{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 100px;
+    height: 100px;
 }

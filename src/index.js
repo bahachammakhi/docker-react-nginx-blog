@@ -16,25 +16,30 @@ import "./styles.css";
 // beyond the scope of this section at the moment, will lookn into later
 
 class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <BrowserRouter>
-          <div>
-            <Switch>
-              <Route exact path="/" component={Payment} />
-              <Route exact path="/landing" component={Landing} />
-              <Route
-                exact
-                path="/locations"
-                component={LocationSelectionMenu}
-              />
-            </Switch>
-          </div>
-        </BrowserRouter>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <BrowserRouter>
+                    <div>
+                        <Switch>
+                            <Route exact path="/" component={Login} />
+                            <Route
+                                exact
+                                path="/paymentselection"
+                                component={Payment}
+                            />
+                            <Route exact path="/landing" component={Landing} />
+                            <Route
+                                exact
+                                path="/locations"
+                                component={LocationSelectionMenu}
+                            />
+                        </Switch>
+                    </div>
+                </BrowserRouter>
+            </div>
+        );
+    }
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));

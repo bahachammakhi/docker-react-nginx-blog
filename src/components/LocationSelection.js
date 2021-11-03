@@ -1,81 +1,110 @@
-import React from "react";
+import React, { useState, useEffect } from "react"; // importing useEffect here
+
 import { useHistory } from "react-router-dom"; // needs to redirect to the drink selector
-import { useForm } from "react-hook-form";
-import { LocalDataStore } from "../helper/localdatastore.js"; // needs to have data passed in rather than hardcoded!
 import { Location } from "../helper/location.js";
 import { FirebaseStore } from "../helper/firestore.js";
 
-import "../styles.css";
+async function gatherInformation() {
+    var container = [];
+    var datastore = new FirebaseStore("");
 
-export default async function LocationSelectionMenu() {
-  // either acquire the locations in sorted order or do it in this function
-  // this data will come from Firestore
-  // TODO: hook Firestore into the application
-
-  var datastore = new FirebaseStore("");
-  var container = [];
-
-  async function gatherInformation() {
-    // code
     var locations = await datastore.getAll("locations");
     locations.forEach((document) => {
-      var sorted = Object.keys(document)
-        .sort()
-        .reduce(function (acc, key) {
-          acc[key] = document[key];
-          return acc;
-        }, {});
-      console.log(sorted);
-      const [address, company, geolocation, queue_length] = Object.values(
-        sorted
-      );
-      container.push(
-        new Location(
-          address,
-          company,
-          geolocation["_lat"],
-          geolocation["_long"],
-          queue_length
-        )
-      );
+        var sorted = Object.keys(document)
+            .sort()
+            .reduce(function (acc, key) {
+                acc[key] = document[key];
+                return acc;
+            }, {});
+        const [address, company, geolocation, queue_length] =
+            Object.values(sorted);
+        container.push(
+            new Location(
+                address,
+                company,
+                geolocation["_lat"],
+                geolocation["_long"],
+                queue_length
+            )
+        );
     });
-    console.log("before container");
-    console.log(container);
+
     // https://stackoverflow.com/questions/15593850/sort-array-based-on-object-attribute-javascript
     // Thank you ^
     container.sort(function (a, b) {
-      return a.queue_length > b.queue_length
-        ? 1
-        : b.queue_length > a.queue_length
-        ? -1
-        : 0;
+        return a.queue_length > b.queue_length
+            ? 1
+            : b.queue_length > a.queue_length
+            ? -1
+            : 0;
     });
     return container;
-  }
-  const Title = () => (
+}
+
+/*
+ * Sub components inside the LocationSelectionMenu
+ */
+
+const Title = () => (
     <h1>
-      <b>Select Location</b>
+        <b>Select Location</b>
     </h1>
-  );
+);
 
-  const Row = (packet) => (
+const Row = (packet) => (
     <p style={{ color: "white" }}>
-      {packet.address} | {packet.name}
+        {packet.address} | {packet.name}
     </p>
-  );
-  async function parseInformation() {
-    const information = await gatherInformation();
-    var rows = [];
+);
 
-    information.forEach((document) => {
-      rows.push(new Row(document));
+const GatheredInformation = () => {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    // useEffect with an empty dependency array works the same way as componentDidMount
+    useEffect(async () => {
+        try {
+            // set loading to true before calling API
+            setLoading(true);
+            const data = await gatherInformation();
+            setData(data);
+            // switch loading to false after fetch is complete
+            setLoading(false);
+        } catch (error) {
+            // add error handling here
+            setLoading(false);
+            console.log(error);
+        }
+    }, []);
+
+    // return a Spinner when loading is true
+    if (loading) return <span>Loading</span>;
+
+    // data will be null when fetch call fails
+    if (!data) return <span>Data not available</span>;
+
+    var rows = [];
+    data.forEach((doc) => {
+        rows.push(Row(doc));
     });
+
+    // when data is available, title is shown
+    return <div id="divElement">{rows}</div>;
+};
+
+/*
+ * Main component
+ */
+
+export default function LocationSelectionMenu() {
+    // either acquire the locations in sorted order or do it in this function
+    // this data will come from Firestore
+    // TODO: hook Firestore into the application
+
     return (
-      <div>
-        <Title />
-        <div>Somthing</div>;
-      </div>
+        <div>
+            <Title />
+            <GatheredInformation />
+        </div>
     );
-  }
-  return await parseInformation();
 }
